@@ -30,7 +30,13 @@ public interface PainterRepository extends Neo4jRepository<Painter,Long> {
     //查找有关画作
     @Query("MATCH (p1 : Painter)-[]-(p2: Painting) WHERE id(p1)={id} RETURN p2;")
     List<Painting> findRelatedPaintingsByPainterId(@Param("id") Long id);
-    
+
+    //查找name画家
+    @Query("MATCH (p : Painter) WHERE p.name={name} RETURN p;")
+    List<Painter> findPainterByName(@Param("name") String name);
+
+
+
 //    MATCH (p1 : Painter)-[]-(p2: Painter) WHERE id(p1)=216055 RETURN p1,p2;
 //    MATCH (p1 : Painter)-[]-(p2: Painting) WHERE id(p1)=216055 RETURN p1,p2;
     

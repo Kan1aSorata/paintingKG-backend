@@ -34,5 +34,8 @@ public class PaintingService {
         return repository.savePaintingDescription(id, description);
     }
 
+    public List<Painting> findPaintingByName(String name) {
+        return repository.findPaintingByName(name);
+    }
 
 }

@@ -32,4 +32,10 @@ public class PainterService<T> {
     public List<Painting> findRelatedPaintings(Long id) {
         return repository.findRelatedPaintingsByPainterId(id);
     }
+
+    public List<Painter> findPainterByName(String name) {
+        return repository.findPainterByName(name);
+    }
+
+
 }

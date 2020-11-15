@@ -1,7 +1,6 @@
 package com.neo4j.demo.controller;
 
 import com.neo4j.demo.entity.Painting;
-import com.neo4j.demo.service.ElasticSearchService;
 import com.neo4j.demo.service.PainterService;
 import com.neo4j.demo.service.PaintingService;
 import com.neo4j.demo.util.NodeUtil;
@@ -11,7 +10,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -61,7 +60,7 @@ public class PaintKGController {
      * @return 节点
      */
         @ApiOperation(value = "用id查找节点，type确定类型")
-    @RequestMapping(value = "/type-id", headers = {"type","id"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/type-id", method = RequestMethod.GET)
     public Object findNodeById(
 
                 @ApiParam(name = "type", value = "1画家2画作")
@@ -70,6 +69,13 @@ public class PaintKGController {
                 @ApiParam(name = "id", value = "节点id")
             @RequestHeader("id") Long id) {
         return type==1? painterService.findPainterById(id) : paintingService.findPaintingById(id);
+    }
+
+    @RequestMapping(value = "/type-name", method = RequestMethod.GET)
+    public List<Object> findNodeByName(
+            @RequestParam("type") int type,
+            @RequestParam("name") String name) {
+            return type == 1? painterService.findPainterByName(name) : Collections.singletonList(paintingService.findPaintingByName(name));
     }
 
     /**
@@ -84,10 +90,6 @@ public class PaintKGController {
         return type == 1?
                 NodeUtil.convert2String(painterService.findRelatedPainters(id), painterService.findRelatedPaintings(id)):
                 NodeUtil.convert2String(paintingService.findRelatedPaintings(id));
-        //        ObjectMapper mapper = new ObjectMapper();
-//        return type==1?
-//                mapper.writeValueAsString(painterService.findRelatedPainters(id))+mapper.writeValueAsString(painterService.findRelatedPaintings(id)):
-//                mapper.writeValueAsString(paintingService.findRelatedPaintings(id));
     }
 
 
