@@ -11,7 +11,7 @@ public class Painting {
     @GeneratedValue
     private Long id;
     @Property(name = "created_time")
-    private String createdTime;//绘画时间
+    private Long createdTime;//绘画时间
     @Field(analyzer = "ik_max_word")
     private String name;//画名
     @Field(analyzer = "ik_max_word")
@@ -65,11 +65,11 @@ public class Painting {
         this.id = id;
     }
 
-    public String getCreatedTime() {
+    public Long getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(String createdTime) {
+    public void setCreatedTime(Long createdTime) {
         this.createdTime = createdTime;
     }
 
@@ -124,7 +124,7 @@ public class Painting {
     public Painting() {
     }
 
-    public Painting(Long id, String createdTime, String name, String museum, String picture, String type, String maker, Long makerId) {
+    public Painting(Long id, Long createdTime, String name, String museum, String picture, String type, String maker, Long makerId) {
         this.id = id;
         this.createdTime = createdTime;
         this.name = name;

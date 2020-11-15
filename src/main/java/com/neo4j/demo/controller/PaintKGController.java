@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @Api(value = "对知识图谱的crud", tags = "查询画家或画作")
+@CrossOrigin
 public class PaintKGController {
     @Resource
     private PainterService painterService;
