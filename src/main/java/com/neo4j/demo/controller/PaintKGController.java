@@ -1,5 +1,6 @@
 package com.neo4j.demo.controller;
 
+import com.neo4j.demo.domain.ChartData;
 import com.neo4j.demo.entity.Painting;
 import com.neo4j.demo.service.PainterService;
 import com.neo4j.demo.service.PaintingService;
@@ -10,9 +11,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
-
 
 @RestController
 @Api(value = "对知识图谱的crud", tags = "查询画家或画作")
@@ -72,10 +71,10 @@ public class PaintKGController {
     }
 
     @RequestMapping(value = "/type-name", method = RequestMethod.GET)
-    public List<Object> findNodeByName(
+    public Object findNodeByName(
             @RequestParam("type") int type,
             @RequestParam("name") String name) {
-            return type == 1? painterService.findPainterByName(name) : Collections.singletonList(paintingService.findPaintingByName(name));
+            return type == 1? painterService.findPainterByName(name) : paintingService.findPaintingByName(name);
     }
 
     /**
@@ -85,11 +84,11 @@ public class PaintKGController {
      * @return 节点集合的json
      */
     @ApiOperation(value = "通过id查找节点及其相关的所有节点")
-    @RequestMapping(value = "/id-graph", headers = {"id","type"}, method = RequestMethod.GET)
-    public String findGraphById(@RequestHeader("type") int type, @RequestHeader("id") Long id) {
+    @RequestMapping(value = "/id-graph", method = RequestMethod.GET)
+    public ChartData findGraphById(@RequestParam("type") int type, @RequestParam("id") Long id) {
         return type == 1?
-                NodeUtil.convert2String(painterService.findRelatedPainters(id), painterService.findRelatedPaintings(id)):
-                NodeUtil.convert2String(paintingService.findRelatedPaintings(id));
+                NodeUtil.convert2ChartData(painterService.findRelatedPainters(id), painterService.findRelatedPaintings(id)):
+                NodeUtil.convert2ChartData(paintingService.findRelatedPaintings(id));
     }
 
 
@@ -97,6 +96,11 @@ public class PaintKGController {
     public Painting addPaintingDescription(@RequestParam("id") Long id,
                                            @RequestParam("des") String des) {
         return paintingService.savePaintingDescription(id, des);
+    }
+
+    @RequestMapping(value = "/made-list",method = RequestMethod.GET)
+    public List<Painting> getMadeList(@RequestParam("id") Long id) {
+        return painterService.findRelatedPaintings(id);
     }
 
 }

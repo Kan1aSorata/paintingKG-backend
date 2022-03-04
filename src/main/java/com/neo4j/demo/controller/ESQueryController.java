@@ -31,10 +31,10 @@ public class ESQueryController {
      * 导入所有画家的数据
      * @throws IOException 找不到service
      */
-//    @RequestMapping("/import/painters")
-//    public void importContent() throws IOException {
-//        searchService.importAllPainters();
-//    }
+    @RequestMapping("/import/painters")
+    public void importContent() throws IOException {
+        searchService.importAllPainters();
+    }
 
     @ApiOperation(value = "搜索候选词")
     @RequestMapping(value = "/search/{index}/{keyword}/{pageNo}/{pageSize}", method = RequestMethod.GET)
@@ -50,10 +50,6 @@ public class ESQueryController {
 
     }
 
-//    @RequestMapping("/import/paintings")
-//    public void importPaintings() throws IOException {
-//        searchService.importAllPaintings();
-//    }
 
 
 }

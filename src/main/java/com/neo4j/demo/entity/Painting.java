@@ -1,5 +1,9 @@
 package com.neo4j.demo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.*;
 import org.springframework.data.elasticsearch.annotations.Field;
 
@@ -22,6 +26,8 @@ public class Painting {
     private String maker;
     @Property(name = "painter_id")
     private Long makerId;
+    @Property(name = "description")
+    private String description;
 
     @Override
     public String toString() {
@@ -33,7 +39,8 @@ public class Painting {
                 ", picture='" + picture + '\'' +
                 ", type='" + type + '\'' +
                 ", maker='" + maker + '\'' +
-                ", maker_id='" + makerId + '\'' +
+                ", makerId=" + makerId +
+                ", description='" + description + '\'' +
                 '}';
     }
 
@@ -49,12 +56,13 @@ public class Painting {
                 Objects.equals(picture, painting.picture) &&
                 Objects.equals(type, painting.type) &&
                 Objects.equals(maker, painting.maker) &&
-                Objects.equals(makerId, painting.makerId);
+                Objects.equals(makerId, painting.makerId) &&
+                Objects.equals(description, painting.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdTime, name, museum, picture, type, maker, makerId);
+        return Objects.hash(id, createdTime, name, museum, picture, type, maker, makerId, description);
     }
 
     public Long getId() {
@@ -121,6 +129,14 @@ public class Painting {
         this.makerId = makerId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Painting() {
     }
 
@@ -133,5 +149,17 @@ public class Painting {
         this.type = type;
         this.maker = maker;
         this.makerId = makerId;
+    }
+
+    public Painting(Long id, Long createdTime, String name, String museum, String picture, String type, String maker, Long makerId, String description) {
+        this.id = id;
+        this.createdTime = createdTime;
+        this.name = name;
+        this.museum = museum;
+        this.picture = picture;
+        this.type = type;
+        this.maker = maker;
+        this.makerId = makerId;
+        this.description = description;
     }
 }

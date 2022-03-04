@@ -1,5 +1,9 @@
 package com.neo4j.demo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -10,6 +14,7 @@ import java.util.*;
 @Component
 @NodeEntity(label = "Painter")
 @Document(indexName = "painter_idx")
+@Data
 public class Painter {
     @Id
     @GeneratedValue
